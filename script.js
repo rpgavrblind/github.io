@@ -3,8 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const resultElement = document.getElementById("result");
     const audioElement = document.getElementById("audioElement");
 
-    // Configure o som com Howler.js
-    const sound = new Howl({
+    let sound = new Howl({
         src: ["dice_roll.mp3"]
     });
 
