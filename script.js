@@ -4,24 +4,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
     rollButton.addEventListener("click", function () {
         const rollResult = Math.floor(Math.random() * 6) + 1;
-        const resultDescription = `Você rolou um dado de 6 lados e obteve o resultado ${rollResult}`;
 
-        // Fale o resultado usando a função de síntese de fala do navegador (Web Speech API)
-        if ('speechSynthesis' in window) {
-            const speech = new SpeechSynthesisUtterance(resultDescription);
-            speech.lang = 'pt-BR'; // Defina o idioma para português (Brasil)
+        // Mapeie o número sorteado para sua descrição em áudio
+        const numberToAudioDescription = {
+            1: 'Um',
+            2: 'Dois',
+            3: 'Três',
+            4: 'Quatro',
+            5: 'Cinco',
+            6: 'Seis'
+        };
 
-            // Converte o número em palavras usando a API Web Speech Synthesis
-            const numbersInWords = ["Um", "Dois", "Três", "Quatro", "Cinco", "Seis"];
-            const numberInWords = numbersInWords[rollResult - 1];
+        const numberInWords = numberToAudioDescription[rollResult];
+        const resultDescription = `Você rolou um dado de 6 lados e obteve o resultado ${numberInWords}.`;
 
-            // Adiciona a descrição em áudio ao texto falado
-            speech.text += `. O resultado é ${numberInWords}.`;
+        // Fale o resultado usando a API Web Speech Synthesis
+        const speech = new SpeechSynthesisUtterance(resultDescription);
+        speech.lang = 'pt-BR'; // Defina o idioma para português (Brasil)
 
-            window.speechSynthesis.speak(speech);
+        window.speechSynthesis.speak(speech);
 
-            // Exibe o resultado na página
-            resultElement.textContent = `Resultado: ${rollResult}`;
-        }
+        // Exibe o resultado na página
+        resultElement.textContent = `Resultado: ${numberInWords}`;
     });
 });
